@@ -1,14 +1,25 @@
 package com.bank.kata.entities;
 
+import com.sun.istack.NotNull;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Address {
 
-    private String street;
-    private String zipcode;
-    private String city;
+    @Column
+    protected String street;
+
+    @Column
+    protected String zipcode;
+
+    @Column
+    protected String city;
 
     public Address() {
     }
-    
+
     public Address(String street, String zipcode, String city) {
         this.street = street;
         this.zipcode = zipcode;

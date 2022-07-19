@@ -1,13 +1,35 @@
 package com.bank.kata.entities;
 
+import com.bank.kata.utils.DateProcessor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "OPERATIONS")
+@SequenceGenerator(
+        name = "ID_GENERATOR", sequenceName="S_OPERATION",allocationSize=5,initialValue=1
+)
 public class Operation {
 
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "ID_GENERATOR"
+    )
+    @Column(name = "OPERATION_ID")
     private Long id;
+
+    @DateTimeFormat(pattern = DateProcessor.DATE_FORMAT)
+
     private LocalDateTime dateOperation;
-    private Double amountOperation;
-    private Double balanceOperation;
+    private BigDecimal amountOperation;
+    private BigDecimal balanceOperation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACCOUNT_ID", nullable = false)
     private Account account;
 
     public Operation() {
@@ -30,19 +52,19 @@ public class Operation {
         this.dateOperation = dateOperation;
     }
 
-    public Double getAmountOperation() {
+    public BigDecimal getAmountOperation() {
         return amountOperation;
     }
 
-    public void setAmountOperation(Double amountOperation) {
+    public void setAmountOperation(BigDecimal amountOperation) {
         this.amountOperation = amountOperation;
     }
 
-    public Double getBalanceOperation() {
+    public BigDecimal getBalanceOperation() {
         return balanceOperation;
     }
 
-    public void setBalanceOperation(Double balanceOperation) {
+    public void setBalanceOperation(BigDecimal balanceOperation) {
         this.balanceOperation = balanceOperation;
     }
 

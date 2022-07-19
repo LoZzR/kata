@@ -1,14 +1,34 @@
 package com.bank.kata.entities;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
-public class Account {
+@Entity
+@Table(name = "ACCOUNTS")
+@SequenceGenerator(
+        name = "ID_GENERATOR", sequenceName="S_ACCOUNT",allocationSize=5,initialValue=1
+)
+public class Account implements Serializable {
 
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "ID_GENERATOR"
+    )
+    @Column(name = "ACCOUNT_ID")
     private Long id;
+
     private String accountNumber;
-    private Double amount;
-    private Double balance;
+    private BigDecimal amount;
+    private BigDecimal balance;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CLIENT_ID", nullable = false)
     private Client client;
+
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Operation> operations;
 
     public Account() {
@@ -31,19 +51,19 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public Double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 

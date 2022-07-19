@@ -1,15 +1,48 @@
 package com.bank.kata.entities;
 
+import com.bank.kata.utils.DateProcessor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public class Client {
+@Entity
+@Table(name = "CLIENTS")
+@SequenceGenerator(
+        name = "ID_GENERATOR", sequenceName="S_CLIENT",allocationSize=5,initialValue=1
+)
+public class Client implements Serializable {
 
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "ID_GENERATOR"
+    )
+    @Column(name = "CLIENT_ID")
     private Long id;
+
     private String firstName;
+
     private String lastName;
-    private LocalDate birthdate;
-    private Address adress;
+
+    @DateTimeFormat(pattern = DateProcessor.DATE_FORMAT)
+    private LocalDateTime birthdate;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street",
+                    column = @Column(name = "CLIENT_STREET")),
+            @AttributeOverride(name = "zipcode",
+                    column = @Column(name = "CLIENT_ZIPCODE", length = 5)),
+            @AttributeOverride(name = "city",
+                    column = @Column(name = "CLIENT_CITY"))
+    })
+    private Address address;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private List<Account> accounts;
 
     public Client() {
@@ -40,20 +73,20 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public LocalDate getBirthdate() {
+    public LocalDateTime getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(LocalDateTime birthdate) {
         this.birthdate = birthdate;
     }
 
-    public Address getAdress() {
-        return adress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAdress(Address adress) {
-        this.adress = adress;
+    public void setAddress(Address adress) {
+        this.address = adress;
     }
 
     public List<Account> getAccounts() {
@@ -71,7 +104,7 @@ public class Client {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthdate=" + birthdate +
-                ", adress=" + adress +
+                ", adress=" + address +
                 '}';
     }
 }
