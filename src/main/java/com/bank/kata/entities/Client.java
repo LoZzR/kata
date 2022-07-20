@@ -24,6 +24,8 @@ public class Client implements Serializable {
     @Column(name = "CLIENT_ID")
     private Long id;
 
+    private String identifier;
+
     private String firstName;
 
     private String lastName;
@@ -55,6 +57,14 @@ public class Client implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getFirstName() {
@@ -101,9 +111,10 @@ public class Client implements Serializable {
     public String toString() {
         return "Client{" +
                 "id=" + id +
+                ", identifier='" + identifier + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", birthdate=" + birthdate +
+                ", birthdate=" + birthdate + '\'' +
                 ", adress=" + address +
                 '}';
     }
