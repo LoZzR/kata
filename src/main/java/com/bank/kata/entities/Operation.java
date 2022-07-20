@@ -25,8 +25,11 @@ public class Operation {
     @DateTimeFormat(pattern = DateProcessor.DATE_FORMAT)
 
     private LocalDateTime dateOperation;
-    private BigDecimal amountOperation;
+    private BigDecimal amount;
     private BigDecimal balanceOperation;
+
+    @Enumerated(EnumType.STRING)
+    private TypeOperation typeOperation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACCOUNT_ID", nullable = false)
@@ -52,12 +55,12 @@ public class Operation {
         this.dateOperation = dateOperation;
     }
 
-    public BigDecimal getAmountOperation() {
-        return amountOperation;
+    public BigDecimal getamount() {
+        return amount;
     }
 
-    public void setAmountOperation(BigDecimal amountOperation) {
-        this.amountOperation = amountOperation;
+    public void setamount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public BigDecimal getBalanceOperation() {
@@ -66,6 +69,22 @@ public class Operation {
 
     public void setBalanceOperation(BigDecimal balanceOperation) {
         this.balanceOperation = balanceOperation;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public TypeOperation getTypeOperation() {
+        return typeOperation;
+    }
+
+    public void setTypeOperation(TypeOperation typeOperation) {
+        this.typeOperation = typeOperation;
     }
 
     public Account getAccount() {
@@ -81,8 +100,9 @@ public class Operation {
         return "Operation{" +
                 "id=" + id +
                 ", dateOperation=" + dateOperation +
-                ", amountOperation=" + amountOperation +
+                ", amount=" + amount +
                 ", balanceOperation=" + balanceOperation +
+                ", typeOperation=" + typeOperation +
                 '}';
     }
 }

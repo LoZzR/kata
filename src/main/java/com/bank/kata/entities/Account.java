@@ -21,7 +21,6 @@ public class Account implements Serializable {
     private Long id;
 
     private String accountNumber;
-    private BigDecimal amount;
     private BigDecimal balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -49,14 +48,6 @@ public class Account implements Serializable {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
     }
 
     public BigDecimal getBalance() {
@@ -88,7 +79,6 @@ public class Account implements Serializable {
         return "Account{" +
                 "id=" + id +
                 ", accountNumber=" + accountNumber +
-                ", amount=" + amount +
                 ", balance=" + balance +
                 ", client=" + client +
                 '}';
