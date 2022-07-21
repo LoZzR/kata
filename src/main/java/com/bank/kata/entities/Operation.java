@@ -26,7 +26,7 @@ public class Operation {
 
     private LocalDateTime dateOperation;
     private BigDecimal amount;
-    private BigDecimal balanceOperation;
+    private BigDecimal balanceAfterOperation;
 
     @Enumerated(EnumType.STRING)
     private TypeOperation typeOperation;
@@ -55,20 +55,12 @@ public class Operation {
         this.dateOperation = dateOperation;
     }
 
-    public BigDecimal getamount() {
-        return amount;
+    public BigDecimal getBalanceAfterOperation() {
+        return balanceAfterOperation;
     }
 
-    public void setamount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public BigDecimal getBalanceOperation() {
-        return balanceOperation;
-    }
-
-    public void setBalanceOperation(BigDecimal balanceOperation) {
-        this.balanceOperation = balanceOperation;
+    public void setBalanceAfterOperation(BigDecimal balanceAfterOperation) {
+        this.balanceAfterOperation = balanceAfterOperation;
     }
 
     public BigDecimal getAmount() {
@@ -101,7 +93,7 @@ public class Operation {
                 "id=" + id +
                 ", dateOperation=" + dateOperation +
                 ", amount=" + amount +
-                ", balanceOperation=" + balanceOperation +
+                ", balanceAfterOperation=" + balanceAfterOperation +
                 ", typeOperation=" + typeOperation +
                 '}';
     }
