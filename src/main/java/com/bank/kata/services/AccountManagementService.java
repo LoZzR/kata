@@ -3,6 +3,7 @@ package com.bank.kata.services;
 import com.bank.kata.entities.Account;
 import com.bank.kata.entities.Operation;
 import com.bank.kata.entities.TypeOperation;
+import com.bank.kata.exceptions.AccountNotFoundException;
 import com.bank.kata.exceptions.ClientAccountMismatchException;
 import com.bank.kata.exceptions.InsufficientBalanceException;
 import com.bank.kata.repositories.AccountRepository;
@@ -30,7 +31,10 @@ public class AccountManagementService implements IAccountManagementService{
     @Override
     @Transactional
     public Operation makeDeposit(String accountNumber, BigDecimal amount) {
-        return null;
+        Account currentAccount = this.accountRepository.findAccountByAccountNumber(accountNumber);
+        if(currentAccount == null)
+            throw new AccountNotFoundException("Account number not found : " + accountNumber);
+        return makeOperation(currentAccount, amount, TypeOperation.DEPOSIT);
     }
 
     @Override

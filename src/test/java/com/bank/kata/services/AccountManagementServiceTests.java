@@ -1,10 +1,9 @@
 package com.bank.kata.services;
 
-import com.bank.kata.KataApplication;
 import com.bank.kata.entities.Account;
-import com.bank.kata.entities.Client;
 import com.bank.kata.entities.Operation;
 import com.bank.kata.entities.TypeOperation;
+import com.bank.kata.exceptions.AccountNotFoundException;
 import com.bank.kata.exceptions.ClientAccountMismatchException;
 import com.bank.kata.exceptions.InsufficientBalanceException;
 import com.bank.kata.repositories.AccountRepository;
@@ -13,11 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-
-import javax.sql.DataSource;
 
 import java.math.BigDecimal;
 
@@ -78,7 +72,7 @@ public class AccountManagementServiceTests {
 
     @Test
     void makeDepositNegatif(){
-        assertThrows(ClientAccountMismatchException.class, () ->
+        assertThrows(AccountNotFoundException.class, () ->
                 this.accountManagementService.makeDeposit("333333333", BigDecimal.valueOf(500)));}
 
 
