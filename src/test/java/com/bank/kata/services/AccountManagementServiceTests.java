@@ -75,4 +75,30 @@ public class AccountManagementServiceTests {
             assertTrue(account.getOperations().contains(newOperation));*/
         });
     }
+
+    @Test
+    void makeDepositNegatif(){
+        assertThrows(ClientAccountMismatchException.class, () ->
+                this.accountManagementService.makeDeposit("333333333", BigDecimal.valueOf(500)));}
+
+
+    @Test
+    void makeDepositPositif(){
+        Account account = this.accountRepository.findAccountByAccountNumber("1111111111");
+        Operation newOperation = this.accountManagementService.makeDeposit("1111111111", BigDecimal.valueOf(500));
+
+        assertAll("operation", () ->
+        {
+            assertNotNull(newOperation);
+            assertNotNull(newOperation.getAccount());
+            assertEquals("1111111111", newOperation.getAccount().getAccountNumber());
+            assertEquals(TypeOperation.DEPOSIT, newOperation.getTypeOperation());
+            assertNotNull(newOperation.getDateOperation());
+            assertEquals(BigDecimal.valueOf(500), newOperation.getAmount());
+            assertEquals(account.getBalance().add(BigDecimal.valueOf(500)), newOperation.getBalanceAfterOperation());
+            assertEquals(newOperation.getAccount().getBalance(), newOperation.getBalanceAfterOperation());
+            /*assertNotNull(account.getOperations());
+            assertTrue(account.getOperations().contains(newOperation));*/
+        });
+    }
 }

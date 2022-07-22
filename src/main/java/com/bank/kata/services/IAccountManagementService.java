@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IAccountManagementService {
 
-    Operation makeDeposit(String identifier, String accountNumber, BigDecimal amount);
+    Operation makeDeposit(String accountNumber, BigDecimal amount);
 
     Operation makeWithdrawal(String identifier, String accountNumber, BigDecimal amount);
 
