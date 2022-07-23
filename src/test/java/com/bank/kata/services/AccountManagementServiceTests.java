@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -50,6 +51,7 @@ public class AccountManagementServiceTests {
     }
 
     @Test
+    @Transactional
     void makeWithdrawalPositifTest(){
         Account account = this.accountRepository.findAccountByAccountNumber("1111111111");
         Operation newOperation = this.accountManagementService.makeWithdrawal("CLIENT1",
@@ -63,10 +65,10 @@ public class AccountManagementServiceTests {
             assertEquals(TypeOperation.WITHDRAWAL, newOperation.getTypeOperation());
             assertNotNull(newOperation.getDateOperation());
             assertEquals(BigDecimal.valueOf(500), newOperation.getAmount());
-            assertEquals(account.getBalance().subtract(BigDecimal.valueOf(500)), newOperation.getBalanceAfterOperation());
+            assertEquals(account.getBalance(), newOperation.getBalanceAfterOperation());
             assertEquals(newOperation.getAccount().getBalance(), newOperation.getBalanceAfterOperation());
-            /*assertNotNull(account.getOperations());
-            assertTrue(account.getOperations().contains(newOperation));*/
+            assertNotNull(account.getOperations());
+            assertTrue(account.getOperations().contains(newOperation));
         });
     }
 
@@ -77,6 +79,7 @@ public class AccountManagementServiceTests {
 
 
     @Test
+    @Transactional
     void makeDepositPositif(){
         Account account = this.accountRepository.findAccountByAccountNumber("1111111111");
         Operation newOperation = this.accountManagementService.makeDeposit("1111111111", BigDecimal.valueOf(500));
@@ -89,10 +92,10 @@ public class AccountManagementServiceTests {
             assertEquals(TypeOperation.DEPOSIT, newOperation.getTypeOperation());
             assertNotNull(newOperation.getDateOperation());
             assertEquals(BigDecimal.valueOf(500), newOperation.getAmount());
-            assertEquals(account.getBalance().add(BigDecimal.valueOf(500)), newOperation.getBalanceAfterOperation());
+            assertEquals(account.getBalance(), newOperation.getBalanceAfterOperation());
             assertEquals(newOperation.getAccount().getBalance(), newOperation.getBalanceAfterOperation());
-            /*assertNotNull(account.getOperations());
-            assertTrue(account.getOperations().contains(newOperation));*/
+            assertNotNull(account.getOperations());
+            assertTrue(account.getOperations().contains(newOperation));
         });
     }
 }
