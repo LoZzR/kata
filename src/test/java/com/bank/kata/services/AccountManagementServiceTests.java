@@ -106,18 +106,18 @@ public class AccountManagementServiceTests {
 
     @Test
     @Transactional
-    void getHistoryOfPeriodClientAccountMismatch(){
-        assertThrows(ClientAccountMismatchException.class, () ->
-                this.accountManagementService.getHistoryOfPeriod("CLIENT2", "1111111111",
-                        DateProcessor.toDate("2022-07-01 00:00").toLocalDate(), LocalDate.now()));
-    }
-
-    @Test
-    @Transactional
     void getHistoryOfPeriodDateMismatch(){
         assertThrows(DateMismatchException.class, () ->
                 this.accountManagementService.getHistoryOfPeriod("CLIENT1", "1111111111",
                         LocalDate.now(), DateProcessor.toDate("2022-07-01 00:00").toLocalDate()));
+    }
+
+    @Test
+    @Transactional
+    void getHistoryOfPeriodClientAccountMismatch(){
+        assertThrows(ClientAccountMismatchException.class, () ->
+                this.accountManagementService.getHistoryOfPeriod("CLIENT2", "1111111111",
+                        DateProcessor.toDate("2022-07-01 00:00").toLocalDate(), LocalDate.now()));
     }
 
     @Test
