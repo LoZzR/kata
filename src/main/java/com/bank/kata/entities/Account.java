@@ -80,7 +80,6 @@ public class Account implements Serializable {
                 "id=" + id +
                 ", accountNumber=" + accountNumber +
                 ", balance=" + balance +
-                ", client=" + client +
                 '}';
     }
 }
